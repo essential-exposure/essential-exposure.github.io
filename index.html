@@ -22,11 +22,156 @@
 					<header id="header">
 						<h1>Essential Exposure</h1>
                         <p>Founder| Dylan Bowman<BR></p>
+                            
+                        Master of quality content creation, business development, event coverage<BR>social media consulting, management and logistics.<BR>
+                            Specializing in light painting photography and fire / LED performance.
+                            <br><BR>
+                            
+                            
+                             <div class="embed-container">
+          <div id="player"></div>
+        </div>
 
-                            Master of quality content creation, business development, social media consulting, management and logistics.<BR>
-Specializing in light painting photography and fire / LED performance.
-<br><BR>
-Helping you do what you want to do for a living.
+        <script>
+          var urlParams = new URLSearchParams( window.location.search );
+          var SETTINGS  = {
+            playlist_id: urlParams.get('playlist') || 'PLYVgr1KH7LSMbcxsD-0jIkXo4x7YQ2p8Z',
+            random     : 1,
+            autoplay   : 1,
+            loop       : 1,
+            index      : 0,
+          };
+
+          // -----------------------------------------------------------------------
+
+          var tag = document.createElement('script');
+          tag.src = "https://www.youtube.com/iframe_api";
+
+          var firstScriptTag = document.getElementsByTagName('script')[0];
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+          // -----------------------------------------------------------------------
+
+          var player;
+
+          function onYouTubeIframeAPIReady()
+          {
+
+            console.log('onYouTubeIframeAPIReady()');
+
+            // ---------------------------------------------------------------------
+
+            player = new YT.Player('player', {
+
+              height: '360',
+              width : '640',
+
+              // -------------------------------------------------------------------
+
+              playerVars: {
+                version : 3,
+                autoplay: SETTINGS.autoplay,
+                loop    : SETTINGS.loop,
+                index   : SETTINGS.index,
+                rel     : 0,
+              },
+
+              // -------------------------------------------------------------------
+
+              events: {
+                'onReady'      : onPlayerReady,
+                'onStateChange': onPlayerStateChange,
+              },
+
+            });
+
+          }
+          // onYouTubeIframeAPIReady()
+
+          // -----------------------------------------------------------------------
+
+          var playlistArray;
+          var playListArrayLength;
+          var maxNumber;
+
+          var oldNumber = SETTINGS.index;
+          var NewNumber = SETTINGS.index;
+
+          function newRandomNumber()
+          {
+
+            oldNumber = NewNumber;
+            NewNumber = Math.floor( Math.random() * maxNumber );
+
+            // ---------------------------------------------------------------------
+
+            return ( NewNumber === oldNumber ) ? newRandomNumber() : NewNumber;
+
+          }
+          // newRandomNumber()
+
+          // -----------------------------------------------------------------------
+
+          function onPlayerReady( event )
+          {
+
+            console.log('onPlayerReady()');
+
+            // ---------------------------------------------------------------------
+
+            player.loadPlaylist({
+              'listType': 'playlist',
+              'list'    : SETTINGS.playlist_id,
+            });
+
+          }
+          // onPlayerReady()
+
+          // -----------------------------------------------------------------------
+
+          var firstLoad = true;
+
+          function onPlayerStateChange( event )
+          {
+
+            console.log('onPlayerStateChange()');
+
+            if ( ! SETTINGS.random )
+            {
+              return;
+            }
+
+            // ---------------------------------------------------------------------
+
+            if ( event.data == YT.PlayerState.ENDED )
+            {
+              player.playVideoAt( newRandomNumber() );
+            }
+            else
+            {
+              if ( firstLoad && event.data == YT.PlayerState.PLAYING )
+              {
+                firstLoad           = false;
+                playlistArray       = player.getPlaylist();
+                playListArrayLength = playlistArray.length;
+                maxNumber           = playListArrayLength;
+                NewNumber           = newRandomNumber();
+
+                player.playVideoAt( newRandomNumber() );
+              }
+            }
+
+          }
+          // onPlayerReady()
+
+        </script>
+                            
+                            
+                            
+                            
+                        
+        
+                           
 						<nav>
 							<ul>
 								<li><a href="https://www.facebook.com/essentialexposure/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
@@ -39,7 +184,7 @@ Helping you do what you want to do for a living.
 
 				<!-- Footer -->
 					<footer id="footer">
-						<span class="copyright">&copy;2023<a href="http://html5up.net"></a></span>
+						<span class="copyright">&copy;2023.  Helping you do what you want to do for a living.<a href="http://html5up.net"></a></span>
 					</footer>
 
 			</div>
